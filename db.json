@@ -1,0 +1,25 @@
+{
+  "profile": {
+    "name": "Bhuvaneshwaran C",
+    "domain": "Full Stack Developer & AI Enthusiast",
+    "about": "I am a BCA final year student with interest in AI and web development."
+  },
+  "skills": [
+    "JavaScript",
+    "Node.js",
+    "HTML",
+    "CSS",
+    "AI Integration"
+  ],
+  "projects": [
+    {
+      "title": "Portfolio Chatbot",
+      "description": "AI chatbot that retrieves data from backend database"
+    }
+  ],
+  "contact": {
+    "email": "example@gmail.com",
+    "phone": "1234567890"
+  }
+}
+
