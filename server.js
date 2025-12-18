@@ -1,23 +1,33 @@
 const express = require("express");
 const fs = require("fs");
-const app = express();
+const cors = require("cors");
 
+const app = express();
+app.use(cors());
+
+// Read JSON database
 const data = JSON.parse(fs.readFileSync("db.json"));
 
 app.get("/chatbot", (req, res) => {
-  const question = req.query.q.toLowerCase();
+  const question = (req.query.q || "").toLowerCase();
+  let answer = "Sorry, I don't have that information.";
 
   if (question.includes("skill")) {
-    res.json({ answer: data.skills });
+    answer = data.skills.join(", ");
   } else if (question.includes("project")) {
-    res.json({ answer: data.projects });
+    answer = data.projects.join(", ");
   } else if (question.includes("about")) {
-    res.json({ answer: data.profile.about });
-  } else {
-    res.json({ answer: "Sorry, I don't have that information." });
+    answer = data.profile.about;
   }
+
+  // IMPORTANT: always return simple text
+  res.json({ answer });
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+// IMPORTANT for Render
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+
+
