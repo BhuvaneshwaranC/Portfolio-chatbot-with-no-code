@@ -1,12 +1,15 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 const cors = require("cors");
 
 const app = express();
 app.use(cors());
 
-// Read JSON database
-const data = JSON.parse(fs.readFileSync("db.json"));
+// Read JSON database safely
+const data = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "db.json"), "utf-8")
+);
 
 app.get("/chatbot", (req, res) => {
   const question = (req.query.q || "").toLowerCase();
@@ -20,14 +23,15 @@ app.get("/chatbot", (req, res) => {
     answer = data.profile.about;
   }
 
-  // IMPORTANT: always return simple text
-  res.json({ answer });
+  res.json({
+    answer: answer
+  });
 });
 
 // IMPORTANT for Render
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(Server running on port ${PORT});
 });
 
 
