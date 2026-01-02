@@ -15,7 +15,7 @@ app.get('/chatbot', (req, res) => {
       return res.status(400).json({ answer: 'Please provide a query (?q=your question)' });
     }
 
-    const dataPath = path.join(__dirname, 'data', 'portfolio.json');
+    const dataPath = path.join(__dirname, 'data', 'db.json');
     const rawData = fs.readFileSync(dataPath, 'utf8');
     const data = JSON.parse(rawData);
 
@@ -106,3 +106,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Portfolio API server running on port ${PORT}`);
 });
+
