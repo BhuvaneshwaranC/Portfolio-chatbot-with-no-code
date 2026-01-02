@@ -1,37 +1,46 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
-app.use(cors());
+app.use(express.json());
+app.use(cors());  // ← FIX: Allows Botpress fetch
 
-// Read JSON database safely
-const data = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "db.json"), "utf-8")
-);
+// JSON database safety
+app.get('/chatbot', (req, res) => {
+  try {
+    const query = req.query.q ? req.query.q.toLowerCase().trim() : '';
+    if (!query) {
+      return res.status(400).json({ answer: 'Please provide a query (?q=your question)' });
+    }
 
-app.get("/chatbot", (req, res) => {
-  const question = (req.query.q || "").toLowerCase();
-  let answer = "Sorry, I don't have that information.";
+    const dataPath = path.join(__dirname, 'data', 'portfolio.json');
+    const rawData = fs.readFileSync(dataPath, 'utf8');
+    const data = JSON.parse(rawData);
 
-  if (question.includes("skill")) {
-    answer = data.skills.join(", ");
-  } else if (question.includes("project")) {
-    answer = data.projects.join(", ");
-  } else if (question.includes("about")) {
-    answer = data.profile.about;
+    let answer = 'No matching information found. Try asking about skills, projects, or experience.';
+
+    if (query.includes('skill') || query.includes('skills')) {
+      answer = data.skills ? data.skills.join(', ') : 'Skills data not available.';
+    } else if (query.includes('project') || query.includes('projects')) {
+      answer = data.projects ? 
+        data.projects.map(p => ${p.name}: ${p.description}).join('\n') : 
+        'Projects data not available.';
+    } else if (query.includes('experience') || query.includes('work')) {
+      answer = data.experience ? data.experience.join('\n') : 'Experience data not available.';
+    } else if (query.includes('about')) {
+      answer = data.about || 'AI Portfolio Chatbot - Built with Node.js, JSON database, and Botpress.';
+    }
+
+    res.json({ answer });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ answer: Server error: ${error.message} });
   }
-
-  res.json({
-    answer: answer
-  });
 });
 
-// IMPORTANT for Render
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("Server running on port" + PORT);
+  console.log(Portfolio API server running on port ${PORT});
 });
-
-
