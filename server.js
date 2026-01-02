@@ -18,21 +18,19 @@ app.get("/chatbot", (req, res) => {
   if (question.includes("skill")) {
     answer = data.skills.join(", ");
   } else if (question.includes("project")) {
-    answer = data.projects.join(", ");
+    answer = data.projects[0].description;
   } else if (question.includes("about")) {
     answer = data.profile.about;
   }
 
-  res.json({
-    answer: answer
-  });
+  res.json({ answer });
 });
 
 // IMPORTANT for Render
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running on port" + PORT);
+app.listen(PORT, () =>  console.log("Server running on port" + PORT);
 });
+
 
 
 
