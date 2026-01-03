@@ -1,0 +1,133 @@
+{
+  "personal_info": {
+    "name": "Bhuvaneshwaran C",
+    "title": "Web Developer & AI Enthusiast",
+    "education": "BCA Student",
+    "specialization": ["Web Development", "AI"],
+    "description": "I'm a BCA student specializing in web development and AI, with hands-on experience in building real-world projects using Python, JavaScript, and machine learning. I enjoy creating useful, efficient, and scalable digital solutions.",
+    "location": {
+      "city": "Chennai",
+      "state": "TN",
+      "country": "India"
+    },
+    "contact": {
+      "email": "bhuvanesh1631@gmail.com",
+      "phone": "+91 93846 21246"
+    },
+    "social_links": {
+      "github": "https://github.com/BhuvaneshwaranC",
+      "linkedin": "https://www.linkedin.com/in/bhuvaneshwaran-c-a70416315/"
+    }
+  },
+  "certifications": [
+    {
+      "id": 1,
+      "title": "Digital Skills: Artificial Intelligence",
+      "issuer": "Accenture via Future Learn",
+      "date": "October 2025",
+      "credential_id": "97NXEE2"
+    },
+    {
+      "id": 2,
+      "title": "Digital Skills: Digital Marketing",
+      "issuer": "Accenture via Future Learn",
+      "date": "December 2024",
+      "credential_id": "I5HG7FQ"
+    },
+    {
+      "id": 3,
+      "title": "Python for Beginners",
+      "issuer": "Simplilearn",
+      "date": "August 2025",
+      "credential_id": "8808711"
+    },
+    {
+      "id": 4,
+      "title": "Getting Python Interview Ready",
+      "issuer": "Simplilearn",
+      "date": "August 2025",
+      "credential_id": "8734191"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI-Driven Drug Trafficking Detection on Telegram",
+      "description": "AI-Driven Drug Trafficking Detection on Telegram uses machine learning to identify drug-related messages in real time, with automated alerts and dashboard monitoring via Telegram APIs.",
+      "technologies": [
+        "Python",
+        "Naïve Bayes",
+        "Telegram Bot API",
+        "Dashboard"
+      ],
+      "image": "Drug Trafficking.png",
+      "links": {
+        "code": "#",
+        "live_demo": "#"
+      }
+    },
+    {
+      "id": 2,
+      "title": "CodSoft Web Development (Calculator, Landing Page, Portfolio)",
+      "description": "Developed responsive web applications using HTML, CSS, and JavaScript with a focus on UI/UX design, responsiveness, and clean code.",
+      "technologies": [
+        "HTML5",
+        "CSS",
+        "JavaScript"
+      ],
+      "image": "https://static.vecteezy.com/system/resources/thumbnails/008/612/703/small_2x/html-code-on-computer-monitor-software-web-developer-programming-code-photo.jpg",
+      "links": {
+        "code": "#",
+        "live_demo": "#"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "position": "Web Development Intern",
+      "company": "CodSoft",
+      "duration": "May 2024 - June 2024",
+      "location": "Remote",
+      "description": "Contributed to the design and development of interactive web projects including a personal portfolio, calculator app, and landing page. Focused on creating responsive, user-friendly interfaces using HTML, CSS, and JavaScript while maintaining clean code practices and modern UI/UX standards.",
+      "achievements": [
+        "Developed a fully responsive personal portfolio website showcasing projects and skills with optimized layouts for all devices.",
+        "Built a functional JavaScript-based calculator implementing dynamic event handling and error validation.",
+        "Designed a visually appealing landing page emphasizing accessibility and design consistency.",
+        "Improved web performance and maintainability through modular CSS and reusable code components."
+      ],
+      "technologies": [
+        "HTML5",
+        "CSS",
+        "JavaScript"
+      ]
+    }
+  ],
+  "skills": {
+    "programming_languages": [
+      "Python",
+      "JavaScript"
+    ],
+    "web_technologies": [
+      "HTML5",
+      "CSS"
+    ],
+    "ai_ml": [
+      "Machine Learning",
+      "Naïve Bayes"
+    ],
+    "apis_integrations": [
+      "Telegram Bot API"
+    ],
+    "other": [
+      "UI/UX Design",
+      "Responsive Design",
+      "Dashboard Development"
+    ]
+  },
+  "metadata": {
+    "last_updated": "2026-01-03",
+    "portfolio_version": "1.0",
+    "status": "active"
+  }
+}
