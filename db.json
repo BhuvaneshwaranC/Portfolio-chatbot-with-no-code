@@ -17,6 +17,12 @@
     "social_links": {
       "github": "https://github.com/BhuvaneshwaranC",
       "linkedin": "https://www.linkedin.com/in/bhuvaneshwaran-c-a70416315/"
+    },
+    "resume": {
+      "pdf_url": "https://drive.google.com/file/d/1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x/view?usp=sharing",
+      "google_drive_id": "1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x",
+      "last_updated": "2026-01-03",
+      "download_url": "https://drive.google.com/uc?export=download&id=1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x"
     }
   },
   "certifications": [
@@ -89,12 +95,14 @@
       "company": "CodSoft",
       "duration": "May 2024 - June 2024",
       "location": "Remote",
-      "description": "Contributed to the design and development of interactive web projects including a personal portfolio, calculator app, and landing page. Focused on creating responsive, user-friendly interfaces using HTML, CSS, and JavaScript while maintaining clean code practices and modern UI/UX standards.",
+      "description": "Built responsive web projects using HTML, CSS, and JavaScript with a focus on clean, user-friendly design".
+",
       "achievements": [
-        "Developed a fully responsive personal portfolio website showcasing projects and skills with optimized layouts for all devices.",
-        "Built a functional JavaScript-based calculator implementing dynamic event handling and error validation.",
-        "Designed a visually appealing landing page emphasizing accessibility and design consistency.",
-        "Improved web performance and maintainability through modular CSS and reusable code components."
+ "- Developed a responsive portfolio website showcasing projects and skills."  ,
+ "- Built a dynamic JavaScript calculator with error handling." , 
+ "- Designed an accessible, visually consistent landing page.",  
+ "- Enhanced performance using modular CSS and reusable code."
+
       ],
       "technologies": [
         "HTML5",
@@ -125,15 +133,9 @@
       "Dashboard Development"
     ]
   },
- "resume": {
-     "pdf_url": "https://drive.google.com/file/d/1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x/view",
-     "download_url": "https://drive.google.com/uc?export=download&id=1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x"
-   },
   "metadata": {
     "last_updated": "2026-01-03",
     "portfolio_version": "1.0",
     "status": "active"
   }
-
 }
-
