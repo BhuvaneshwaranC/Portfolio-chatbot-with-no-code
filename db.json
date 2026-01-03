@@ -125,9 +125,9 @@
       "Dashboard Development"
     ]
   },
-  "resume": {
-     "pdf_url": "https://drive.google.com/file/d/1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x/view?usp=drive_link",
-     "download_url": "https://drive.google.com/file/d/1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x/view?usp=drive_link"
+ "resume": {
+     "pdf_url": "https://drive.google.com/file/d/1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x/view",
+     "download_url": "https://drive.google.com/uc?export=download&id=1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x"
    },
   "metadata": {
     "last_updated": "2026-01-03",
@@ -136,3 +136,4 @@
   }
 
 }
+
