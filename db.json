@@ -95,14 +95,12 @@
       "company": "CodSoft",
       "duration": "May 2024 - June 2024",
       "location": "Remote",
-      "description": "Built responsive web projects using HTML, CSS, and JavaScript with a focus on clean, user-friendly design".
-",
+      "description": "Built responsive web projects using HTML, CSS, and JavaScript with a focus on clean, user-friendly design.",
       "achievements": [
- "- Developed a responsive portfolio website showcasing projects and skills."  ,
- "- Built a dynamic JavaScript calculator with error handling." , 
- "- Designed an accessible, visually consistent landing page.",  
- "- Enhanced performance using modular CSS and reusable code."
-
+        "Developed a responsive portfolio website showcasing projects and skills.",
+        "Built a dynamic JavaScript calculator with error handling.",
+        "Designed an accessible, visually consistent landing page.",
+        "Enhanced performance using modular CSS and reusable code."
       ],
       "technologies": [
         "HTML5",
