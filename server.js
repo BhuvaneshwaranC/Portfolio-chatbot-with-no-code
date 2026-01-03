@@ -14,14 +14,195 @@ app.use(express.urlencoded({ extended: true }));
 // Database file path
 const DB_PATH = path.join(__dirname, 'db.json');
 
-// Helper function to read database
+// Default database structure
+const getDefaultData = () => ({
+  "personal_info": {
+    "name": "Bhuvaneshwaran C",
+    "title": "Web Developer & AI Enthusiast",
+    "education": "BCA Student",
+    "specialization": ["Web Development", "AI"],
+    "description": "I'm a BCA student specializing in web development and AI, with hands-on experience in building real-world projects using Python, JavaScript, and machine learning. I enjoy creating useful, efficient, and scalable digital solutions.",
+    "location": {
+      "city": "Chennai",
+      "state": "TN",
+      "country": "India"
+    },
+    "contact": {
+      "email": "bhuvanesh1631@gmail.com",
+      "phone": "+91 93846 21246"
+    },
+    "social_links": {
+      "github": "https://github.com/BhuvaneshwaranC",
+      "linkedin": "https://www.linkedin.com/in/bhuvaneshwaran-c-a70416315/"
+    },
+    "resume": {
+      "pdf_url": "https://drive.google.com/file/d/1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x/view?usp=sharing",
+      "google_drive_id": "1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x",
+      "last_updated": "2026-01-03",
+      "download_url": "https://drive.google.com/uc?export=download&id=1SRUAVToE3rI9jCQpwR78ZeGn0tPyvU-x"
+    }
+  },
+  "certifications": [
+    {
+      "id": 1,
+      "title": "Digital Skills: Artificial Intelligence",
+      "issuer": "Accenture via Future Learn",
+      "date": "October 2025",
+      "credential_id": "97NXEE2"
+    },
+    {
+      "id": 2,
+      "title": "Digital Skills: Digital Marketing",
+      "issuer": "Accenture via Future Learn",
+      "date": "December 2024",
+      "credential_id": "I5HG7FQ"
+    },
+    {
+      "id": 3,
+      "title": "Python for Beginners",
+      "issuer": "Simplilearn",
+      "date": "August 2025",
+      "credential_id": "8808711"
+    },
+    {
+      "id": 4,
+      "title": "Getting Python Interview Ready",
+      "issuer": "Simplilearn",
+      "date": "August 2025",
+      "credential_id": "8734191"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI-Driven Drug Trafficking Detection on Telegram",
+      "description": "AI-Driven Drug Trafficking Detection on Telegram uses machine learning to identify drug-related messages in real time, with automated alerts and dashboard monitoring via Telegram APIs.",
+      "technologies": [
+        "Python",
+        "Naïve Bayes",
+        "Telegram Bot API",
+        "Dashboard"
+      ],
+      "image": "Drug Trafficking.png",
+      "links": {
+        "code": "#",
+        "live_demo": "#"
+      }
+    },
+    {
+      "id": 2,
+      "title": "CodSoft Web Development (Calculator, Landing Page, Portfolio)",
+      "description": "Developed responsive web applications using HTML, CSS, and JavaScript with a focus on UI/UX design, responsiveness, and clean code.",
+      "technologies": [
+        "HTML5",
+        "CSS",
+        "JavaScript"
+      ],
+      "image": "https://static.vecteezy.com/system/resources/thumbnails/008/612/703/small_2x/html-code-on-computer-monitor-software-web-developer-programming-code-photo.jpg",
+      "links": {
+        "code": "#",
+        "live_demo": "#"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "position": "Web Development Intern",
+      "company": "CodSoft",
+      "duration": "May 2024 - June 2024",
+      "location": "Remote",
+      "description": "Built responsive web projects using HTML, CSS, and JavaScript with a focus on clean, user-friendly design.",
+      "achievements": [
+        "Developed a responsive portfolio website showcasing projects and skills.",
+        "Built a dynamic JavaScript calculator with error handling.",
+        "Designed an accessible, visually consistent landing page.",
+        "Enhanced performance using modular CSS and reusable code."
+      ],
+      "technologies": [
+        "HTML5",
+        "CSS",
+        "JavaScript"
+      ]
+    }
+  ],
+  "skills": {
+    "programming_languages": [
+      "Python",
+      "JavaScript"
+    ],
+    "web_technologies": [
+      "HTML5",
+      "CSS"
+    ],
+    "ai_ml": [
+      "Machine Learning",
+      "Naïve Bayes"
+    ],
+    "apis_integrations": [
+      "Telegram Bot API"
+    ],
+    "other": [
+      "UI/UX Design",
+      "Responsive Design",
+      "Dashboard Development"
+    ]
+  },
+  "metadata": {
+    "last_updated": "2026-01-03",
+    "portfolio_version": "1.0",
+    "status": "active"
+  }
+});
+
+// Initialize database if it doesn't exist
+const initializeDatabase = () => {
+  if (!fs.existsSync(DB_PATH)) {
+    console.log('⚠️  db.json not found, creating with default data...');
+    const defaultData = getDefaultData();
+    try {
+      fs.writeFileSync(DB_PATH, JSON.stringify(defaultData, null, 2));
+      console.log('✅ Database created successfully');
+      return defaultData;
+    } catch (error) {
+      console.error('❌ Failed to create database:', error);
+      return null;
+    }
+  }
+  return null;
+};
+
+// Helper function to read database with fallback
 const readDatabase = () => {
   try {
-    const data = fs.readFileSync(DB_PATH, 'utf8');
-    return JSON.parse(data);
+    // Check if file exists
+    if (!fs.existsSync(DB_PATH)) {
+      console.log('📁 Database file not found, initializing...');
+      const defaultData = initializeDatabase();
+      if (defaultData) return defaultData;
+      // If initialization failed, return default data from memory
+      return getDefaultData();
+    }
+    
+    // Read the file
+    const fileContent = fs.readFileSync(DB_PATH, 'utf8');
+    
+    // Check if file is empty
+    if (!fileContent || fileContent.trim() === '') {
+      console.log('📁 Database file is empty, using default data...');
+      const defaultData = getDefaultData();
+      writeDatabase(defaultData);
+      return defaultData;
+    }
+    
+    // Parse and return
+    return JSON.parse(fileContent);
   } catch (error) {
-    console.error('Error reading database:', error);
-    return null;
+    console.error('❌ Error reading database:', error);
+    
+    // Try to use default data as fallback
+    console.log('🔄 Using default data as fallback...');
+    return getDefaultData();
   }
 };
 
@@ -29,12 +210,23 @@ const readDatabase = () => {
 const writeDatabase = (data) => {
   try {
     fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+    console.log('✅ Database updated successfully');
     return true;
   } catch (error) {
-    console.error('Error writing database:', error);
+    console.error('❌ Error writing database:', error);
     return false;
   }
 };
+
+// Initialize database on server start
+console.log('🔍 Checking database...');
+const initialData = readDatabase();
+if (initialData) {
+  console.log('✅ Database loaded successfully');
+  console.log(`📊 Data summary: ${initialData.projects?.length || 0} projects, ${initialData.certifications?.length || 0} certifications`);
+} else {
+  console.log('⚠️  Using in-memory database');
+}
 
 // ==================== ROUTES ====================
 
@@ -43,6 +235,8 @@ app.get('/', (req, res) => {
   res.json({
     message: 'Portfolio API Server',
     version: '1.0',
+    status: 'online',
+    database: fs.existsSync(DB_PATH) ? 'connected' : 'using fallback',
     endpoints: {
       'GET /api/portfolio': 'Get complete portfolio data',
       'GET /api/personal-info': 'Get personal information',
@@ -84,7 +278,7 @@ app.get('/api/portfolio', (req, res) => {
 
 app.get('/api/personal-info', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.personal_info) {
     res.json(data.personal_info);
   } else {
     res.status(500).json({ error: 'Failed to read database' });
@@ -110,7 +304,7 @@ app.put('/api/personal-info', (req, res) => {
 
 app.get('/api/certifications', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.certifications) {
     res.json(data.certifications);
   } else {
     res.status(500).json({ error: 'Failed to read database' });
@@ -119,7 +313,7 @@ app.get('/api/certifications', (req, res) => {
 
 app.get('/api/certifications/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.certifications) {
     const cert = data.certifications.find(c => c.id === parseInt(req.params.id));
     if (cert) {
       res.json(cert);
@@ -133,7 +327,7 @@ app.get('/api/certifications/:id', (req, res) => {
 
 app.post('/api/certifications', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.certifications) {
     const newId = Math.max(...data.certifications.map(c => c.id), 0) + 1;
     const newCert = { id: newId, ...req.body };
     data.certifications.push(newCert);
@@ -150,7 +344,7 @@ app.post('/api/certifications', (req, res) => {
 
 app.put('/api/certifications/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.certifications) {
     const index = data.certifications.findIndex(c => c.id === parseInt(req.params.id));
     if (index !== -1) {
       data.certifications[index] = { ...data.certifications[index], ...req.body };
@@ -170,7 +364,7 @@ app.put('/api/certifications/:id', (req, res) => {
 
 app.delete('/api/certifications/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.certifications) {
     const index = data.certifications.findIndex(c => c.id === parseInt(req.params.id));
     if (index !== -1) {
       const deleted = data.certifications.splice(index, 1);
@@ -192,7 +386,7 @@ app.delete('/api/certifications/:id', (req, res) => {
 
 app.get('/api/projects', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.projects) {
     res.json(data.projects);
   } else {
     res.status(500).json({ error: 'Failed to read database' });
@@ -201,7 +395,7 @@ app.get('/api/projects', (req, res) => {
 
 app.get('/api/projects/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.projects) {
     const project = data.projects.find(p => p.id === parseInt(req.params.id));
     if (project) {
       res.json(project);
@@ -215,7 +409,7 @@ app.get('/api/projects/:id', (req, res) => {
 
 app.post('/api/projects', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.projects) {
     const newId = Math.max(...data.projects.map(p => p.id), 0) + 1;
     const newProject = { id: newId, ...req.body };
     data.projects.push(newProject);
@@ -232,7 +426,7 @@ app.post('/api/projects', (req, res) => {
 
 app.put('/api/projects/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.projects) {
     const index = data.projects.findIndex(p => p.id === parseInt(req.params.id));
     if (index !== -1) {
       data.projects[index] = { ...data.projects[index], ...req.body };
@@ -252,7 +446,7 @@ app.put('/api/projects/:id', (req, res) => {
 
 app.delete('/api/projects/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.projects) {
     const index = data.projects.findIndex(p => p.id === parseInt(req.params.id));
     if (index !== -1) {
       const deleted = data.projects.splice(index, 1);
@@ -274,7 +468,7 @@ app.delete('/api/projects/:id', (req, res) => {
 
 app.get('/api/experience', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.experience) {
     res.json(data.experience);
   } else {
     res.status(500).json({ error: 'Failed to read database' });
@@ -283,7 +477,7 @@ app.get('/api/experience', (req, res) => {
 
 app.get('/api/experience/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.experience) {
     const exp = data.experience.find(e => e.id === parseInt(req.params.id));
     if (exp) {
       res.json(exp);
@@ -297,7 +491,7 @@ app.get('/api/experience/:id', (req, res) => {
 
 app.post('/api/experience', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.experience) {
     const newId = Math.max(...data.experience.map(e => e.id), 0) + 1;
     const newExp = { id: newId, ...req.body };
     data.experience.push(newExp);
@@ -314,7 +508,7 @@ app.post('/api/experience', (req, res) => {
 
 app.put('/api/experience/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.experience) {
     const index = data.experience.findIndex(e => e.id === parseInt(req.params.id));
     if (index !== -1) {
       data.experience[index] = { ...data.experience[index], ...req.body };
@@ -334,7 +528,7 @@ app.put('/api/experience/:id', (req, res) => {
 
 app.delete('/api/experience/:id', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.experience) {
     const index = data.experience.findIndex(e => e.id === parseInt(req.params.id));
     if (index !== -1) {
       const deleted = data.experience.splice(index, 1);
@@ -356,7 +550,7 @@ app.delete('/api/experience/:id', (req, res) => {
 
 app.get('/api/skills', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.skills) {
     res.json(data.skills);
   } else {
     res.status(500).json({ error: 'Failed to read database' });
@@ -365,7 +559,7 @@ app.get('/api/skills', (req, res) => {
 
 app.put('/api/skills', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.skills) {
     data.skills = { ...data.skills, ...req.body };
     data.metadata.last_updated = new Date().toISOString().split('T')[0];
     if (writeDatabase(data)) {
@@ -383,18 +577,18 @@ app.put('/api/skills', (req, res) => {
 // Endpoint for chatbot to get portfolio summary
 app.get('/api/chatbot/summary', (req, res) => {
   const data = readDatabase();
-  if (data) {
+  if (data && data.personal_info && data.skills) {
     const summary = {
       name: data.personal_info.name,
       title: data.personal_info.title,
       location: `${data.personal_info.location.city}, ${data.personal_info.location.state}`,
       email: data.personal_info.contact.email,
-      total_certifications: data.certifications.length,
-      total_projects: data.projects.length,
-      total_experience: data.experience.length,
+      total_certifications: data.certifications?.length || 0,
+      total_projects: data.projects?.length || 0,
+      total_experience: data.experience?.length || 0,
       key_skills: [
-        ...data.skills.programming_languages,
-        ...data.skills.web_technologies
+        ...(data.skills.programming_languages || []),
+        ...(data.skills.web_technologies || [])
       ]
     };
     res.json(summary);
@@ -419,10 +613,10 @@ app.post('/api/chatbot/query', (req, res) => {
       response = {
         type: 'contact',
         data: {
-          email: data.personal_info.contact.email,
-          phone: data.personal_info.contact.phone,
-          linkedin: data.personal_info.social_links.linkedin,
-          github: data.personal_info.social_links.github
+          email: data.personal_info?.contact?.email,
+          phone: data.personal_info?.contact?.phone,
+          linkedin: data.personal_info?.social_links?.linkedin,
+          github: data.personal_info?.social_links?.github
         }
       };
       break;
@@ -430,14 +624,14 @@ app.post('/api/chatbot/query', (req, res) => {
     case 'skills':
       response = {
         type: 'skills',
-        data: data.skills
+        data: data.skills || {}
       };
       break;
 
     case 'projects':
       response = {
         type: 'projects',
-        data: data.projects.map(p => ({
+        data: (data.projects || []).map(p => ({
           title: p.title,
           description: p.description,
           technologies: p.technologies
@@ -448,7 +642,7 @@ app.post('/api/chatbot/query', (req, res) => {
     case 'certifications':
       response = {
         type: 'certifications',
-        data: data.certifications.map(c => ({
+        data: (data.certifications || []).map(c => ({
           title: c.title,
           issuer: c.issuer,
           date: c.date
@@ -459,7 +653,7 @@ app.post('/api/chatbot/query', (req, res) => {
     case 'experience':
       response = {
         type: 'experience',
-        data: data.experience.map(e => ({
+        data: (data.experience || []).map(e => ({
           position: e.position,
           company: e.company,
           duration: e.duration,
@@ -472,9 +666,9 @@ app.post('/api/chatbot/query', (req, res) => {
       response = {
         type: 'general',
         data: {
-          name: data.personal_info.name,
-          title: data.personal_info.title,
-          description: data.personal_info.description
+          name: data.personal_info?.name,
+          title: data.personal_info?.title,
+          description: data.personal_info?.description
         }
       };
   }
@@ -523,6 +717,16 @@ app.get('/api/chatbot/suggestions', (req, res) => {
   }
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  const dbExists = fs.existsSync(DB_PATH);
+  res.json({
+    status: 'healthy',
+    database: dbExists ? 'connected' : 'fallback mode',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Error handling middleware
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
@@ -533,4 +737,5 @@ app.listen(PORT, () => {
   console.log(`🚀 Portfolio API Server running on http://localhost:${PORT}`);
   console.log(`📚 API Documentation: http://localhost:${PORT}/`);
   console.log(`📁 Database: ${DB_PATH}`);
+  console.log(`💚 Health Check: http://localhost:${PORT}/health`);
 });
